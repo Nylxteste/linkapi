@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api</title>
+    <style>
+        tr {
+            background-color: rgb(93, 93, 189);
+        }
+
+        th {
+            border: 2px solid black;
+            width: 400px;
+            height: 50px;
+        }
+
+        td {
+            border: 2px solid black;
+            width: 400px;
+        }
+
+        input {
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tabua">
+        <table id="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td id="id"></td>
+                </tr>
+                <tr>
+                    <th>Nome</th>
+                    <td id="nome"></td>
+                </tr>
+                <tr>
+                    <th>email</th>
+                    <td id="email"></td>
+
+                </tr>
+                <tr>
+                    <th>Senha</th>
+                    <td id="senha"></td>
+
+                </tr>
+                <tr>
+                    <th>Nivel</th>
+                    <td id="nivel"></td>
+                </tr>
+                <tr>
+                    <th>Data</th>
+                    <td id="data"></td>
+                </tr>
+                <tr>
+                    <th>incorreto?</th>
+                    <td id="incorreto"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="button" value="localizar dados" onclick="consultarApi()">
+    </div>
+
+    <script type="application/javascript">
+        var id = document.getElementById('id')
+        var nome = document.getElementById('nome')
+        var email = document.getElementById('email')
+        var senha = document.getElementById('senha')
+        var nivel = document.getElementById('nivel')
+        var data = document.getElementById('data')
+        var incorreto = document.getElementById('incorreto')
+
+        function consultarApi() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'https://www.barth.com.br/project2MJA/usuarios/verificarUsuario.php?email=admin@admin.com&senha=1223');
+            xhr.send(null);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var res = JSON.parse(xhr.responseText)
+                    console.log(res)
+                    incorreto.innerText = res.message 
+                    nome.innerText = res.nome
+                    id.innerText = res.id
+                    nivel.innerText = res.nivel
+                    email.innerText = res.email
+                    senha.innerText = res.senha
+                    data.innerText = res.data
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
